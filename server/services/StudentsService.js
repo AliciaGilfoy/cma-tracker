@@ -2,6 +2,9 @@ import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
 class StudentsService {
+  async deleteAll(query = {}) {
+    return await dbContext.Students.deleteMany(query);
+  }
   async addPoints(body) {
     let student = await dbContext.Students.findOne({ name: body.name });
     if (!student) {
