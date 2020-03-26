@@ -11,8 +11,8 @@ export class StudentsController extends BaseController {
       .put("/:name", this.addPoints)
       .get("/:name", this.getByName)
       .get("", this.getAll)
-      .delete("", this.deleteAll)
       .use(auth0Provider.getAuthorizedUserInfo)
+      .delete("", this.deleteAll)
   }
   async getAll(req, res, next) {
     try {
@@ -51,8 +51,8 @@ export class StudentsController extends BaseController {
 
   async deleteAll(req, res, next) {
     try {
-      let data = await studentsService.deleteAll()
-      res.send("deleted")
+      let data = await studentsService.deleteAll(req.userInfo.email)
+      res.send(data)
     } catch (error) {
       next(error);
     }

@@ -1,14 +1,21 @@
 import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
+let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
 class StudentsService {
-  async deleteAll(query = {}) {
-    return await dbContext.Students.deleteMany(query);
+  async deleteAll(userEmail) {
+    if (approved.find(e => e == userEmail)) {
+      let query = {}
+      await dbContext.Students.deleteMany(query);
+      return "deleted"
+    } else {
+      return "You can not delete this."
+    }
   }
   async addPoints(body) {
     let student = await dbContext.Students.findOne({ name: body.name });
     if (!student) {
-      this.create(body)
+      return await this.create(body)
     }
     else {
       if (student.key == body.key) {
