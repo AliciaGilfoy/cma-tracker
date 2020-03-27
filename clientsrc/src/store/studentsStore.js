@@ -1,0 +1,85 @@
+import { api } from "../services/AxiosService";
+
+export const studentStore = {
+  actions: {
+    async getAllStudents({ commit }) {
+      try {
+        let res = await api.get("students");
+        commit("setStudents", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async getStudentById({ commit }, id) {
+      try {
+        let res = await api.get("students/" + id);
+        commit("setActiveStudent", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    setActiveStudent({ commit }, student) {
+      commit("setActiveStudent", student)
+    },
+
+    async createStudent({ commit, dispatch }, newStudent) {
+      try {
+        let res = await api.post("students", newStudent)
+        commit("addStudent", res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async editStudent({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("students/" + update.id + "/edit", update.body)
+        dispatch(this.getAllStudents)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addPoints({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("students/" + update.id, update.points)
+        let points = res.data.points
+        let studentId = update.id
+        dispatch("updatePoints", { studentId, points })
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async spendPoints({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("students/" + update.id + "/spend", update.points)
+        let points = res.data.points
+        let studentId = update.id
+        dispatch("updatePoints", { studentId, points })
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteById({ commit, dispatch }, id) {
+      try {
+        let res = await api.delete("students/" + id);
+        commit("deleteStudent", id)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteAll({ commit, dispatch }, id) {
+      try {
+        let res = await api.delete("students/");
+        dispatch(this.getAllStudents)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+}
