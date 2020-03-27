@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const Student = new Schema(
   {
     name: { type: String, required: true, unique: true },
-    key: { type: String, required: true },
     points: { type: Number, default: 0 },
-    date: [{ type: String }]
+    date: [{ type: String }],
+    profileEmail: { type: String, required: true },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

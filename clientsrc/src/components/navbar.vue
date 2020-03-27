@@ -1,6 +1,9 @@
 <template>
-  <nav v-if="$auth.isAuthenticated" class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'Home' }">Champions Martial Arts</router-link>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <router-link class="navbar-brand" :to="{ name: 'Home' }">
+      <img class="big-icon" src="../assets/ATALogo2.png" alt="ATA logo" />
+      Champions Martial Arts
+    </router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -54,4 +57,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.big-icon {
+  height: 50px;
+  width: auto;
+}
+.bg-black {
+  background-color: black;
+}
+</style>
