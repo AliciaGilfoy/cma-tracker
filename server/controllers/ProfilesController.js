@@ -13,7 +13,7 @@ export class ProfilesController extends BaseController {
       .use(auth0Provider.getAuthorizedUserInfo)
       .get("", this.getUserProfile)
       .get("/:id/students", this.getStudentsByProfileEmail)
-      .get("/:id/redeamed", this.getRedeamedByProfileId)
+      .get("/:id/redeamed", this.getRedeamedByProfileEmail)
       .put("/:id", this.edit);
   }
   async getUserProfile(req, res, next) {
@@ -34,9 +34,9 @@ export class ProfilesController extends BaseController {
     }
   }
 
-  async getRedeamedByProfileId(req, res, next) {
+  async getRedeamedByProfileEmail(req, res, next) {
     try {
-      let profile = await redeamedsService.getRedeamedByProfileId(req.userInfo.email);
+      let profile = await redeamedsService.getRedeamedByProfileEmail(req.userInfo.email);
       res.send(profile);
     } catch (error) {
       next(error);
@@ -45,7 +45,8 @@ export class ProfilesController extends BaseController {
   async edit(req, res, next) {
     try {
       req.body.creatorId = req.user.sub;
-      res.send(req.body);
+      let data = await profilesService.updateProfile(req.userInfo, req.body)
+      res.send(data);
     } catch (error) {
       next(error);
     }

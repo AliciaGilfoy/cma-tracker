@@ -27,7 +27,7 @@ class PrizesService {
 
   async edit(id, email, update) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Prizes.findOneAndUpdate({ _id: id, profileEmail: email }, update, { new: true })
+      let prize = await dbContext.Prizes.findOneAndUpdate({ _id: id }, update, { new: true })
       if (!prize) {
         throw new BadRequest("Invalid ID or you do not own this board");
       }
@@ -36,7 +36,7 @@ class PrizesService {
   }
   async deleteById(id, email, update) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Prizes.findOneAndUpdate({ _id: id, profileEmail: email }, update, { new: true })
+      let prize = await dbContext.Prizes.findOneAndUpdate({ _id: id }, update, { new: true })
       if (!prize) {
         throw new BadRequest("Invalid ID or you do not own this board");
       }

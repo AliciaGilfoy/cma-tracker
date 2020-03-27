@@ -52,7 +52,7 @@ export class PrizesController extends BaseController {
   async deleteById(req, res, next) {
     try {
       let update = { "active": false }
-      let data = await prizesService.deleteById(req.body, req.userInfo.email, update)
+      let data = await prizesService.deleteById(req.params.id, req.userInfo.email, update)
       return res.send("Sucessfully deleted")
     } catch (error) {
       next(error);

@@ -6,6 +6,7 @@ const Redeamed = new Schema(
   {
     studentId: { type: ObjectId, ref: "Student", required: true },
     prizeId: { type: ObjectId, ref: "Prize", required: true },
+    profileEmail: { type: String, required: true },
     date: { type: String, required: true },
     instructorId: { type: ObjectId, ref: "Profile", required: true },
     complete: { type: Boolean, default: false },

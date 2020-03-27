@@ -10,6 +10,21 @@ class RedeamedsService {
     }
     return prize
   }
+
+  async getRedeamedByStudentId(id, email) {
+    let prizes = await dbContext.Redeameds.find({ studentId: id, profileEmail: email })
+    if (!prizes) {
+      throw new BadRequest("Invalid ID or you do not have access to this prize")
+    }
+    return prizes
+  }
+  async getRedeamedByProfileEmail(email) {
+    let prizes = await dbContext.Redeameds.find({ profileEmail: email })
+    if (!prizes) {
+      throw new BadRequest("Invalid ID or you do not have access to this prize")
+    }
+    return prizes
+  }
   async getAll(email) {
     if (approved.find(e => e == email)) {
       let query = {}
@@ -41,7 +56,7 @@ class RedeamedsService {
   }
   async deleteById(id, email) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Redeameds.deleteOne(id)
+      let prize = await dbContext.Redeameds.deleteOne({ _id: id })
       if (!prize) {
         throw new BadRequest("Invalid ID");
       }
@@ -49,12 +64,7 @@ class RedeamedsService {
     }
   }
 
-  async getRedeamedByStudentId(id, email) {
-    throw new Error("Method not implemented.");
-  }
-  async getRedeamedByProfileId(email) {
-    throw new Error("Method not implemented.");
-  }
+
 
 }
 export const redeamedsService = new RedeamedsService();
