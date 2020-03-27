@@ -56,6 +56,7 @@ class StudentsService {
     if (!student) {
       throw new BadRequest("Invalid ID or you do not have access to this student");
     } else {
+      // @ts-ignore
       if (student.date.find(d => d == update.date)) {
         return "You already added points for this day"
       } else {
