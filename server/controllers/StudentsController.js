@@ -95,7 +95,7 @@ export class StudentsController extends BaseController {
   }
   async deleteById(req, res, next) {
     try {
-      let data = await studentsService.deleteById(req.body, req.userInfo.email)
+      let data = await studentsService.deleteById(req.params.id, req.userInfo.email)
       return res.send("Sucessfully deleted")
     } catch (error) {
       next(error);

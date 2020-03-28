@@ -27,7 +27,7 @@ export const studentStore = {
     async createStudent({ commit, dispatch }, newStudent) {
       try {
         let res = await api.post("students", newStudent)
-        commit("addStudent", res.data)
+        dispatch("getStudentsByProfileId")
       } catch (error) {
         console.error(error);
       }
@@ -57,7 +57,7 @@ export const studentStore = {
 
     async addChallenge({ commit, dispatch }, update) {
       try {
-        let res = await api.put("students/" + update.id + "/challenge", { points: update.points, challengeId: update.challengeId })
+        let res = await api.put("students/" + update.id + "/challenge", { points: update.points, challengeId: update.challengeId, challengeName: update.challengeName })
         if (res.data == "No") {
           let message = "You already completed that challenge."
           commit("setError", message)

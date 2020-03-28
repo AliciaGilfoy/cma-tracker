@@ -104,7 +104,7 @@ export default new Vuex.Store({
     async getRedeamedsByProfileId({ commit }) {
       try {
         let id = this.state.profile._id
-        let res = await api.get("profile/" + id + "/redeameds");
+        let res = await api.get("profile/" + id + "/redeamed");
         commit("setRedeameds", res.data)
       } catch (error) {
         console.error(error);

@@ -55,7 +55,7 @@ export class RedeamedsController extends BaseController {
   async complete(req, res, next) {
     try {
       req.body.completedBy = req.userInfo.email
-      let data = await redeamedsService.complete(req.params.id, req.body.update)
+      let data = await redeamedsService.complete(req.params.id, req.body)
       return res.send(data)
     } catch (error) {
       next(error);

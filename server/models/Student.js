@@ -9,6 +9,7 @@ const Student = new Schema(
     date: [{ type: String }],
     profileEmail: { type: String, required: true },
     challengeId: [{ type: ObjectId, ref: "Challenge" }],
+    challengeName: [{ type: String }]
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

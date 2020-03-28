@@ -1,14 +1,11 @@
 <template>
   <div class="card text-white bg-success mb-3">
-    <div class="card-header">
+    <div class="card-header header-row">
       <img class="icon" src="../assets/blackbelt.png" />
-      {{challengeData.name}}
-      <a
-        class="mx-1"
-        v-if="challengeData.link"
-        :href="challengeData.link"
-        target="_blank"
-      >
+      <h3 class="pl-2">
+        <strong>{{challengeData.name}}</strong>
+      </h3>
+      <a class="mx-1" v-if="challengeData.link" :href="challengeData.link" target="_blank">
         <i class="fas fa-external-link-alt"></i>
       </a>
     </div>
@@ -80,10 +77,12 @@ export default {
     submitChallenge(data) {
       let totalPoints = data.point;
       let challengeId = data._id;
+      let challengeName = data.name;
       let update = {
         id: this.selected._id,
         points: totalPoints,
-        challengeId: challengeId
+        challengeId: challengeId,
+        challengeName: challengeName
       };
       console.log(update);
       this.$store.dispatch("addChallenge", update);
@@ -117,5 +116,9 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+.header-row {
+  display: flex;
+  flex-direction: row;
 }
 </style>

@@ -5,7 +5,7 @@ let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
 class StudentsService {
 
   async getStudentsByProfileEmail(email) {
-    let students = await dbContext.Students.find({ profileEmail: email })
+    let students = await dbContext.Students.find({ profileEmail: email }).populate("challengeId", "name")
     if (!students) {
       throw new BadRequest("Invalid email or you do not have access to this student")
     }
@@ -84,6 +84,8 @@ class StudentsService {
         student.points += body.points
         // @ts-ignore
         student.challengeId.push(body.challengeId)
+        // @ts-ignore
+        student.challengeName.push(body.challengeName)
         await student.save();
         return student;
       }
@@ -98,7 +100,7 @@ class StudentsService {
   }
   async deleteById(id, email) {
     if (approved.find(e => e == email)) {
-      await dbContext.Students.deleteOne(id);
+      await dbContext.Students.deleteOne({ _id: id });
       return "deleted"
     } else {
       return "You can not delete this."

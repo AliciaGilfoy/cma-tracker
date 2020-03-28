@@ -36,17 +36,17 @@ export const redeamedStore = {
     async editRedeamed({ commit, dispatch }, update) {
       try {
         let res = await api.put("redeameds/" + update.id, update.body)
-        dispatch(this.getAllRedeameds)
+        dispatch("getAllRedeameds")
       } catch (error) {
         console.error(error);
       }
     },
 
-    async completeRedeamed({ commit, dispatch }) {
+    async completeRedeamed({ commit, dispatch }, update) {
       try {
-        let update = { "completed": true }
-        let res = await api.put("redeameds/" + update.id + "/complete", update)
-        dispatch(this.getAllRedeameds)
+        let updateBody = { "complete": true }
+        let res = await api.put("redeameds/" + update + "/complete", updateBody)
+        dispatch("getAllRedeameds")
       } catch (error) {
         console.error(error);
       }
