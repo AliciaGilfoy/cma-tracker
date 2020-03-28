@@ -3,6 +3,7 @@ import { BadRequest } from "../utils/Errors";
 
 let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
 class StudentsService {
+
   async getStudentsByProfileEmail(email) {
     let students = await dbContext.Students.find({ profileEmail: email })
     if (!students) {
@@ -58,16 +59,36 @@ class StudentsService {
     } else {
       // @ts-ignore
       if (student.date.find(d => d == update.date)) {
-        return "You already added points for this day"
+        return "No"
       } else {
         // @ts-ignore
         student.points += update.points
+        // @ts-ignore
+        student.date.push(update.date)
         await student.save();
         return student;
       }
     }
   }
 
+  async addChallenge(id, email, body) {
+    let student = await dbContext.Students.findOne({ _id: id, profileEmail: email });
+    if (!student) {
+      throw new BadRequest("Invalid ID or you do not have access to this student");
+    } else {
+      // @ts-ignore
+      if (student.challengeId.find(c => c == body.challengeId)) {
+        return "No"
+      } else {
+        // @ts-ignore
+        student.points += body.points
+        // @ts-ignore
+        student.challengeId.push(body.challengeId)
+        await student.save();
+        return student;
+      }
+    }
+  }
   async editName(id, email, update) {
     let student = await dbContext.Students.findOneAndUpdate({ _id: id, profileEmail: email }, update, { new: true })
     if (!student) {

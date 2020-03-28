@@ -6,6 +6,7 @@ import { prizeStore } from "./prizesStore";
 import { studentStore } from "./studentsStore";
 import { challengeStore } from "./challengesStore";
 import { redeamedStore } from "./redeamedsStore";
+import { taskStore } from "./tasksStore";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     profile: {},
-    students: {},
+    students: [],
     activeStudent: {},
     challenges: [],
     activeChallenge: {},
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     activePrize: {},
     redeameds: [],
     activeRedeameds: {},
+    tasks: [],
+    activeTask: {},
+    error: ""
 
 
   },
@@ -31,10 +35,10 @@ export default new Vuex.Store({
     setActiveStudent(state, student) {
       state.activeStudent = student;
     },
-    setStudents(state, { student, name }) {
-      Vue.set(state.students, name, student);
+    setStudents(state, students) {
+      state.students = students
     },
-    updatePoints(state, {studentId, points}){
+    updatePoints(state, { studentId, points }) {
       let student = state.students.find(s => s._id = studentId)
       student.points = points
     },
@@ -47,21 +51,30 @@ export default new Vuex.Store({
     setActivePrize(state, prize) {
       state.activePrize = prize;
     },
-    addPrize(state, prize){
+    addPrize(state, prize) {
       state.prizes.push(prize)
     },
-    deletePrize(state, id){
+    deletePrize(state, id) {
       state.prizes.filter(r => r._id != id)
     },
     setRedeameds(state, redeameds) {
       state.redeameds = redeameds
     },
-    addRedeamed(state, redeamed){
+    addRedeamed(state, redeamed) {
       state.redeameds.push(redeamed)
     },
-    deleteRedeamed(state, id){
+    deleteRedeamed(state, id) {
       state.redeameds.filter(r => r._id != id)
-    }
+    },
+    setTasks(state, tasks) {
+      state.tasks = tasks
+    },
+    setActiveTask(state, task) {
+      state.activeTask = task
+    },
+    setError(state, message) {
+      state.error = message
+    },
 
   },
   actions: {
@@ -79,12 +92,35 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getStudentsByProfileId({ commit }) {
+      try {
+        let id = this.state.profile._id
+        let res = await api.get("profile/" + id + "/students");
+        commit("setStudents", res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getRedeamedsByProfileId({ commit }) {
+      try {
+        let id = this.state.profile._id
+        let res = await api.get("profile/" + id + "/redeameds");
+        commit("setRedeameds", res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    resetError({ commit }) {
+      let message = ""
+      commit("setError", message)
+    }
 
   },
   modules: {
     challengeStore,
     prizeStore,
     redeamedStore,
-    studentStore
+    studentStore,
+    taskStore
   }
 });

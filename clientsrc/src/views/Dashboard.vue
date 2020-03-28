@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "Admin",
+  name: "Dashboard",
   computed: {
     profile() {
       return this.$store.state.profile;

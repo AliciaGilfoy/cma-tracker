@@ -36,6 +36,8 @@ async function mergeSubsIfNeeded(profile, user) {
 function sanitizeBody(body) {
   let writable = {
     name: body.name,
+    admin: body.admin,
+    instructor: body.instructor,
     picture: body.picture
   };
   return writable;

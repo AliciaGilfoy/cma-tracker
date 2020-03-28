@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const Student = new Schema(
   {
@@ -7,6 +8,7 @@ const Student = new Schema(
     points: { type: Number, default: 0 },
     date: [{ type: String }],
     profileEmail: { type: String, required: true },
+    challengeId: [{ type: ObjectId, ref: "Challenge" }],
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

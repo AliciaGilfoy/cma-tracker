@@ -15,6 +15,7 @@ export class StudentsController extends BaseController {
       .get("/:id/prizes", this.getRedeamedByStudentId)
       .post("", this.create)
       .put("/:id", this.addPoints)
+      .put("/:id/challenge", this.addChallenge)
       .put("/:id/spend", this.spendPoints)
       .put("/:id/edit", this.editName)
       .delete("", this.deleteAll)
@@ -76,6 +77,14 @@ export class StudentsController extends BaseController {
     }
   }
 
+  async addChallenge(req, res, next) {
+    try {
+      let data = await studentsService.addChallenge(req.params.id, req.userInfo.email, req.body)
+      return res.send(data)
+    } catch (error) {
+      next(error);
+    }
+  }
   async editName(req, res, next) {
     try {
       let data = await studentsService.editName(req.params.id, req.userInfo.email, req.body)

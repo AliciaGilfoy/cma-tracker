@@ -4,6 +4,7 @@ import ProfileSchema from "../models/Profile";
 import PrizeSchema from "../models/Prize";
 import RedeamedSchema from "../models/Redeamed";
 import ChallengeSchema from "../models/Challenge";
+import TaskSchema from "../models/Task";
 
 class DbContext {
   Students = mongoose.model("Student", StudentSchema);
@@ -14,6 +15,8 @@ class DbContext {
   Redeameds = mongoose.model("Redeamed", RedeamedSchema);
 
   Challenges = mongoose.model("Challenge", ChallengeSchema);
+
+  Tasks = mongoose.model("Task", TaskSchema);
 
 }
 

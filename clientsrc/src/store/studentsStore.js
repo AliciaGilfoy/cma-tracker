@@ -44,10 +44,25 @@ export const studentStore = {
 
     async addPoints({ commit, dispatch }, update) {
       try {
-        let res = await api.put("students/" + update.id, update.points)
-        let points = res.data.points
-        let studentId = update.id
-        dispatch("updatePoints", { studentId, points })
+        let res = await api.put("students/" + update.id, { points: update.points, date: update.date })
+        if (res.data == "No") {
+          let message = "You already added points for that date."
+          commit("setError", message)
+        }
+        console.log(res)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addChallenge({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("students/" + update.id + "/challenge", { points: update.points, challengeId: update.challengeId })
+        if (res.data == "No") {
+          let message = "You already completed that challenge."
+          commit("setError", message)
+        }
+        console.log(res)
       } catch (error) {
         console.error(error);
       }

@@ -3,43 +3,54 @@ import { BadRequest } from "../utils/Errors";
 
 let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
 class ChallengesService {
+
   async getById(id) {
-    let prize = await dbContext.Challenges.findOne({ _id: id })
-    if (!prize) {
+    let data = await dbContext.Challenges.findOne({ _id: id })
+    if (!data) {
       throw new BadRequest("Invalid ID")
     }
-    return prize
+    return data
   }
   async getAll() {
     let query = {}
-    let prizes = await dbContext.Challenges.find(query)
-    return prizes
+    let datas = await dbContext.Challenges.find(query)
+    return datas
   }
   async create(email, body) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Challenges.create(body)
-      return prize
+      let data = await dbContext.Challenges.create(body)
+      return data
     }
   }
   async edit(id, email, update) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Challenges.findOneAndUpdate({ _id: id }, update, { new: true })
-      if (!prize) {
+      let data = await dbContext.Challenges.findOneAndUpdate({ _id: id }, update, { new: true })
+      if (!data) {
         throw new BadRequest("Invalid ID");
       }
-      return prize;
+      return data;
     }
   }
   async deleteById(id, email) {
     if (approved.find(e => e == email)) {
-      let prize = await dbContext.Challenges.deleteOne({ _id: id })
-      if (!prize) {
+      let data = await dbContext.Challenges.deleteOne({ _id: id })
+      if (!data) {
         throw new BadRequest("Invalid ID");
       }
-      return prize;
+      return "successfully deleted";
     }
   }
 
+  async deleteAll(email) {
+    if (approved.find(e => e == email)) {
+      let query = {}
+      let data = await dbContext.Challenges.deleteMany(query)
+      if (!data) {
+        throw new BadRequest("Invalid ID");
+      }
+      return "deleted";
+    }
+  }
 
 
 }

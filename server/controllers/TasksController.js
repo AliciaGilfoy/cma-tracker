@@ -1,13 +1,13 @@
 import express from "express";
 import BaseController from "../utils/BaseController";
-import { challengesService } from "../services/ChallengesService";
+import { tasksService } from "../services/TasksService";
 import auth0Provider from "@bcwdev/auth0provider";
 
-export class ChallengesController extends BaseController {
+export class TasksController extends BaseController {
 
 
   constructor() {
-    super("api/challenges");
+    super("api/tasks");
     this.router
       .get("", this.getAll)
       .use(auth0Provider.getAuthorizedUserInfo)
@@ -15,13 +15,12 @@ export class ChallengesController extends BaseController {
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.deleteById)
-      .delete("", this.deleteAll)
 
   }
 
   async getById(req, res, next) {
     try {
-      let data = await challengesService.getById(req.params.id)
+      let data = await tasksService.getById(req.params.id)
       return res.send(data);
     } catch (error) {
       next(error);
@@ -29,7 +28,7 @@ export class ChallengesController extends BaseController {
   }
   async getAll(req, res, next) {
     try {
-      let data = await challengesService.getAll()
+      let data = await tasksService.getAll()
       return res.send(data);
     } catch (error) {
       next(error);
@@ -37,7 +36,7 @@ export class ChallengesController extends BaseController {
   }
   async create(req, res, next) {
     try {
-      let data = await challengesService.create(req.userInfo.email, req.body)
+      let data = await tasksService.create(req.userInfo.email, req.body)
       return res.send(data);
     } catch (error) {
       next(error);
@@ -45,7 +44,7 @@ export class ChallengesController extends BaseController {
   }
   async edit(req, res, next) {
     try {
-      let data = await challengesService.edit(req.params.id, req.userInfo.email, req.body)
+      let data = await tasksService.edit(req.params.id, req.userInfo.email, req.body)
       return res.send(data)
     } catch (error) {
       next(error);
@@ -54,16 +53,7 @@ export class ChallengesController extends BaseController {
 
   async deleteById(req, res, next) {
     try {
-      let data = await challengesService.deleteById(req.params.id, req.userInfo.email)
-      return res.send("Sucessfully deleted")
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async deleteAll(req, res, next) {
-    try {
-      let data = await challengesService.deleteAll(req.userInfo.email)
+      let data = await tasksService.deleteById(req.params.id, req.userInfo.email)
       return res.send("Sucessfully deleted")
     } catch (error) {
       next(error);
