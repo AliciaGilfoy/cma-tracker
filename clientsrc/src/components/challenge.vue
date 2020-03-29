@@ -13,8 +13,10 @@
       <h4 class="card-title text-center">Earn {{challengeData.point}} points!</h4>
       <p class="card-text text-center">{{challengeData.description}}</p>
       <div class="row text-center p-0 button-row">
+        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
+        <button class="btn btn-sm btn-primary m-1" v-if="$route.name=='Admin'">Edit</button>
         <button
-          v-if="profile.email"
+          v-if="profile.email && $route.name!='Admin'"
           @click="getStudents"
           type="button"
           data-toggle="modal"
@@ -84,7 +86,6 @@ export default {
         challengeId: challengeId,
         challengeName: challengeName
       };
-      console.log(update);
       this.$store.dispatch("addChallenge", update);
       let formData = event.target;
       formData.reset();

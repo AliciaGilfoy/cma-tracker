@@ -14,6 +14,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     profile: {},
+    profiles: [],
     students: [],
     activeStudent: {},
     challenges: [],
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     setProfile(state, profile) {
       state.profile = profile;
     },
+    setProfiles(state, profiles) {
+      state.profiles = profiles
+    },
     setActiveStudent(state, student) {
       state.activeStudent = student;
     },
@@ -39,7 +43,7 @@ export default new Vuex.Store({
       state.students = students
     },
     updatePoints(state, { studentId, points }) {
-      let student = state.students.find(s => s._id = studentId)
+      let student = state.students.find(s => s._id == studentId)
       student.points = points
     },
     setChallenges(state, challenges) {
@@ -88,6 +92,14 @@ export default new Vuex.Store({
       try {
         let res = await api.get("profile");
         commit("setProfile", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getAllProfiles({ commit }) {
+      try {
+        let res = await api.get("profile/all");
+        commit("setProfiles", res.data);
       } catch (error) {
         console.error(error);
       }

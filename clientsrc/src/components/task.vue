@@ -13,6 +13,7 @@
           <i class="fas fa-external-link-alt"></i>
         </a>
         <span class="text-warning">({{taskData.point}} points)</span>
+        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
       </p>
       <footer v-if="taskData.description" class="blockquote-footer">{{taskData.description}}</footer>
     </blockquote>

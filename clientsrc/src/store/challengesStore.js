@@ -27,7 +27,7 @@ export const challengeStore = {
     async createChallenge({ commit, dispatch }, newChallenge) {
       try {
         let res = await api.post("challenges", newChallenge)
-        dispatch(this.getAllChallenges)
+        dispatch("getAllChallenges")
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +36,7 @@ export const challengeStore = {
     async editChallenge({ commit, dispatch }, update) {
       try {
         let res = await api.put("challenges/" + update.id, update.body)
-        dispatch(this.getAllChallenges)
+        dispatch("getAllChallenges")
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +45,7 @@ export const challengeStore = {
     async deleteById({ commit, dispatch }, id) {
       try {
         let res = await api.delete("challenges/" + id)
-        dispatch(this.getAllChallenges)
+        dispatch("getAllChallenges")
       } catch (error) {
         console.error(error);
       }

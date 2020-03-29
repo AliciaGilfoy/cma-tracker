@@ -41,19 +41,19 @@ class StudentsService {
       throw new BadRequest("Invalid ID or you do not have access to this student");
     } else {
       // @ts-ignore
-      if (student.points < prize.price) {
+      if (student.points < prize.points) {
         throw new BadRequest("Not enough points");
       } else {
         // @ts-ignore
-        student.points -= prize.price
+        student.points -= prize.points
         await student.save();
       }
       return student;
     }
   }
 
-  async addPoints(id, email, update) {
-    let student = await dbContext.Students.findOne({ _id: id, profileEmail: email });
+  async addPoints(id, update) {
+    let student = await dbContext.Students.findOne({ _id: id });
     if (!student) {
       throw new BadRequest("Invalid ID or you do not have access to this student");
     } else {

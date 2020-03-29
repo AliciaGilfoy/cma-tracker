@@ -37,6 +37,7 @@ export class RedeamedsController extends BaseController {
   }
   async create(req, res, next) {
     try {
+      req.body.profileEmail = req.userInfo.email
       let data = await redeamedsService.create(req.body)
       return res.send(data);
     } catch (error) {

@@ -27,7 +27,7 @@ export const prizeStore = {
     async createPrize({ commit, dispatch }, newPrize) {
       try {
         let res = await api.post("prizes", newPrize)
-        dispatch(this.getAllPrizes)
+        dispatch("getAllPrizes")
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +36,7 @@ export const prizeStore = {
     async editPrize({ commit, dispatch }, update) {
       try {
         let res = await api.put("prizes/" + update.id, update.body)
-        dispatch(this.getAllPrizes)
+        dispatch("getAllPrizes")
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +45,7 @@ export const prizeStore = {
     async deleteById({ commit, dispatch }, id) {
       try {
         let res = await api.put("prizes/" + id + "/delete")
-        dispatch(this.getAllPrizes)
+        dispatch("getAllPrizes")
       } catch (error) {
         console.error(error);
       }

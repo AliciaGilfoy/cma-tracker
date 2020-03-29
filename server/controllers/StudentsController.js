@@ -61,7 +61,7 @@ export class StudentsController extends BaseController {
 
   async addPoints(req, res, next) {
     try {
-      let data = await studentsService.addPoints(req.params.id, req.userInfo.email, req.body)
+      let data = await studentsService.addPoints(req.params.id, req.body)
       return res.send(data)
     } catch (error) {
       next(error);

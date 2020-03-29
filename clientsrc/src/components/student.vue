@@ -12,13 +12,18 @@
         {{studentData.points}}
       </h5>
       <h5 class="card-text">
-        <strong class="text-success">Completed Dates:</strong>
-        {{studentData.date.toString()}}
+        <strong class="text-success">Completed Days:</strong>
+        {{studentData.date.length.toString()}}
       </h5>
-      <h5 class="card-text">
+      <h6 class="card-text">
         <strong class="text-success">Completed Challenges:</strong>
-        {{studentData.challengeName.toString()}}
-      </h5>
+        {{studentData.challengeName.length.toString()}}
+      </h6>
+      <div class="buttonRow row">
+        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
+        <button class="btn btn-sm btn-success m-1" v-if="$route.name=='Admin'">Add points</button>
+        <button class="btn btn-sm btn-primary m-1" v-if="$route.name=='Admin'">Edit</button>
+      </div>
     </div>
   </div>
 </template>
@@ -43,5 +48,10 @@ export default {
 .image {
   height: 40px;
   width: auto;
+}
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 </style>

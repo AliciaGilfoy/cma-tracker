@@ -27,7 +27,7 @@ export const taskStore = {
     async createTask({ commit, dispatch }, newTask) {
       try {
         let res = await api.post("tasks", newTask)
-        dispatch(this.getAllTasks)
+        dispatch("getAllTasks")
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +36,7 @@ export const taskStore = {
     async editTask({ commit, dispatch }, update) {
       try {
         let res = await api.put("tasks/" + update.id, update.body)
-        dispatch(this.getAllTasks)
+        dispatch("getAllTasks")
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +45,7 @@ export const taskStore = {
     async deleteById({ commit, dispatch }, id) {
       try {
         let res = await api.delete("tasks/" + id)
-        dispatch(this.getAllTasks)
+        dispatch("getAllTasks")
       } catch (error) {
         console.error(error);
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="card m-2">
-    <img v-if="prize && prize.picUrl" :src="prize.picUrl" class="card-img-top" alt="..." />
     <div class="card-body bg-dark text-success text-center">
+      <h4 v-if="prize" class="card-title">Student: {{student.name}}</h4>
       <h5 v-if="prize" class="card-title">{{prize.name}}</h5>
       <p v-if="prize" class="card-text">{{prize.description}}</p>
       <button

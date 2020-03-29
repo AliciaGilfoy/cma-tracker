@@ -62,7 +62,6 @@ export const studentStore = {
           let message = "You already completed that challenge."
           commit("setError", message)
         }
-        console.log(res)
       } catch (error) {
         console.error(error);
       }
@@ -70,10 +69,10 @@ export const studentStore = {
 
     async spendPoints({ commit, dispatch }, update) {
       try {
-        let res = await api.put("students/" + update.id + "/spend", update.points)
+        let res = await api.put("students/" + update.studentId + "/spend", update)
         let points = res.data.points
-        let studentId = update.id
-        dispatch("updatePoints", { studentId, points })
+        let studentId = update.studentId
+        commit("updatePoints", { studentId, points })
       } catch (error) {
         console.error(error);
       }

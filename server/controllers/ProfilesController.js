@@ -12,6 +12,7 @@ export class ProfilesController extends BaseController {
     this.router
       .use(auth0Provider.getAuthorizedUserInfo)
       .get("", this.getUserProfile)
+      .get("/all", this.getAllProfiles)
       .get("/:id/students", this.getStudentsByProfileEmail)
       .get("/:id/redeamed", this.getRedeamedByProfileEmail)
       .put("/:id", this.edit);
@@ -19,6 +20,15 @@ export class ProfilesController extends BaseController {
   async getUserProfile(req, res, next) {
     try {
       let profile = await profilesService.getProfile(req.userInfo);
+      res.send(profile);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getAllProfiles(req, res, next) {
+    try {
+      let profile = await profilesService.getAllProfiles(req.userInfo.email);
       res.send(profile);
     } catch (error) {
       next(error);

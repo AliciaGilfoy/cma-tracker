@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext";
-
+let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
 // Private Methods
 
 /**
@@ -44,6 +44,13 @@ function sanitizeBody(body) {
 }
 
 class ProfileService {
+  async getAllProfiles(email) {
+    if (approved.find(e => e == email)) {
+      let query = {}
+      let students = await dbContext.Profile.find(query);
+      return students;
+    }
+  }
   /**
    * Provided an array of user emails will return an array of user profiles with email picture and name
    * @param {String[]} emails Array of email addresses to lookup users by
