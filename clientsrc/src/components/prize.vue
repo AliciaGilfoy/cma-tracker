@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "Prize",
   props: ["prizeData"],
@@ -52,31 +54,45 @@ export default {
   },
   methods: {
     buyPrize(prize) {
-      if (prize.instructorId) {
-        let update = {
-          studentId: this.activeStudent._id,
-          studentName: this.activeStudent.name,
-          points: prize.price,
-          prizeId: prize._id,
-          prizeName: prize.name,
-          instructorId: prize.instructorId,
-          date: this.todaysDate
-        };
-        this.$store.dispatch("spendPoints", update);
-        this.$store.dispatch("createRedeamed", update);
-      } else {
-        let update = {
-          studentId: this.activeStudent._id,
-          points: prize.price,
-          prizeName: prize.name,
-          studentName: this.activeStudent.name,
-          prizeId: prize._id,
-          instructorId: "5e7ff8cd59b18b366c1fc058",
-          date: this.todaysDate
-        };
-        this.$store.dispatch("spendPoints", update);
-        this.$store.dispatch("createRedeamed", update);
-      }
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Use my points!"
+      }).then(result => {
+        if (result.value) {
+          if (prize.instructorId) {
+            let update = {
+              studentId: this.activeStudent._id,
+              studentName: this.activeStudent.name,
+              points: prize.price,
+              prizeId: prize._id,
+              prizeName: prize.name,
+              instructorId: prize.instructorId,
+              date: this.todaysDate
+            };
+            Swal.fire("Redeamed!", "Points have been redeamed.", "success");
+            this.$store.dispatch("spendPoints", update);
+            this.$store.dispatch("createRedeamed", update);
+          } else {
+            let update = {
+              studentId: this.activeStudent._id,
+              points: prize.price,
+              prizeName: prize.name,
+              studentName: this.activeStudent.name,
+              prizeId: prize._id,
+              instructorId: "5e7ff8cd59b18b366c1fc058",
+              date: this.todaysDate
+            };
+            Swal.fire("Redeamed!", "Points have been redeamed.", "success");
+            this.$store.dispatch("spendPoints", update);
+            this.$store.dispatch("createRedeamed", update);
+          }
+        }
+      });
     },
     deletePrize(id) {
       this.$store.dispatch("deletePrizeById", id);

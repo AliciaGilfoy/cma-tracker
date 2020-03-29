@@ -14,12 +14,27 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "Redeamed",
   props: ["redeamedData"],
   methods: {
     completeRedeamed(id) {
-      this.$store.dispatch("completeRedeamed", id);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Mark Complete!"
+      }).then(result => {
+        if (result.value) {
+          Swal.fire("Success!", "Prize has been marked redeamed.", "success");
+          this.$store.dispatch("completeRedeamed", id);
+        }
+      });
     }
   }
 };

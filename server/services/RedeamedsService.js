@@ -19,13 +19,9 @@ class RedeamedsService {
     return prizes
   }
   async getAll(email) {
-    if (approved.find(e => e == email)) {
-      let query = {}
-      let prizes = await dbContext.Redeameds.find(query)
-      return prizes
-    } else {
-      return "You are not authorized"
-    }
+    let query = {}
+    let prizes = await dbContext.Redeameds.find(query)
+    return prizes
   }
   async create(body) {
     let prize = await dbContext.Redeameds.create(body)

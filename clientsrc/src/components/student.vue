@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
   name: "Student",
   props: ["studentData"],
@@ -64,7 +65,20 @@ export default {
   },
   methods: {
     deleteStudent(id) {
-      this.$store.dispatch("deleteStudentById", id);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          Swal.fire("Deleted!", "Student has been deleted.", "success");
+          this.$store.dispatch("deleteStudentById", id);
+        }
+      });
     },
     addPointsAdmin(id) {
       let update = {
