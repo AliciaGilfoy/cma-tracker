@@ -42,6 +42,9 @@ export default new Vuex.Store({
     setStudents(state, students) {
       state.students = students
     },
+    deleteStudent(state, id) {
+      state.students = state.students.filter(s => s._id != id)
+    },
     updatePoints(state, { studentId, points }) {
       let student = state.students.find(s => s._id == studentId)
       student.points = points
@@ -125,6 +128,15 @@ export default new Vuex.Store({
     resetError({ commit }) {
       let message = ""
       commit("setError", message)
+    },
+
+    async updateProfilePermissions({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("profile/" + update.profileId + "/editPermissions", update)
+        dispatch("getAllProfiles")
+      } catch (error) {
+        console.error(error);
+      }
     }
 
   },

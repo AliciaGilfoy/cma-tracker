@@ -4,8 +4,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const Redeamed = new Schema(
   {
-    studentId: { type: ObjectId, ref: "Student", required: true },
-    prizeId: { type: ObjectId, ref: "Prize", required: true },
+    studentName: { type: String, required: true },
+    prizeName: { type: String, required: true },
     profileEmail: { type: String, required: true },
     date: { type: String, required: true },
     instructorId: { type: ObjectId, ref: "Profile", required: true },

@@ -6,6 +6,7 @@ import { redeamedsService } from "../services/RedeamedsService";
 
 export class StudentsController extends BaseController {
 
+
   constructor() {
     super("api/students");
     this.router
@@ -15,6 +16,7 @@ export class StudentsController extends BaseController {
       .get("/:id/prizes", this.getRedeamedByStudentId)
       .post("", this.create)
       .put("/:id", this.addPoints)
+      .put("/:id/adminPoints", this.addAdminPoints)
       .put("/:id/challenge", this.addChallenge)
       .put("/:id/spend", this.spendPoints)
       .put("/:id/edit", this.editName)
@@ -62,6 +64,15 @@ export class StudentsController extends BaseController {
   async addPoints(req, res, next) {
     try {
       let data = await studentsService.addPoints(req.params.id, req.body)
+      return res.send(data)
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async addAdminPoints(req, res, next) {
+    try {
+      let data = await studentsService.addAdminPoints(req.userInfo.email, req.params.id, req.body)
       return res.send(data)
     } catch (error) {
       next(error);

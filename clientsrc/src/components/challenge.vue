@@ -13,8 +13,11 @@
       <h4 class="card-title text-center">Earn {{challengeData.point}} points!</h4>
       <p class="card-text text-center">{{challengeData.description}}</p>
       <div class="row text-center p-0 button-row">
-        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
-        <button class="btn btn-sm btn-primary m-1" v-if="$route.name=='Admin'">Edit</button>
+        <button
+          @click="deleteChallenge(challengeData._id)"
+          class="btn btn-sm btn-danger m-1"
+          v-if="$route.name=='Admin'"
+        >delete</button>
         <button
           v-if="profile.email && $route.name!='Admin'"
           @click="getStudents"
@@ -45,7 +48,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitChallenge(challengeData)" id="pointsForm">
+            <form @submit.prevent="submitChallenge(challengeData._id)" id="pointsForm">
               <div class="form-group">
                 <label class="float-left text-secondary" for="student">Select student</label>
                 <select class="custom-select" id="studentSelect" v-model="selected">
@@ -90,6 +93,9 @@ export default {
       let formData = event.target;
       formData.reset();
       $("#modal" + this.challengeData._id).modal("toggle");
+    },
+    deleteChallenge(challenge) {
+      this.$store.dispatch("deleteChallengeById", challenge);
     }
   },
   computed: {
@@ -108,7 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .icon {
   height: 30px;
   width: auto;

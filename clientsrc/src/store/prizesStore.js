@@ -42,7 +42,7 @@ export const prizeStore = {
       }
     },
 
-    async deleteById({ commit, dispatch }, id) {
+    async deletePrizeById({ commit, dispatch }, id) {
       try {
         let res = await api.put("prizes/" + id + "/delete")
         dispatch("getAllPrizes")

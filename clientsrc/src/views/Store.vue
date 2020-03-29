@@ -51,7 +51,7 @@
           </h2>
         </div>
         <div class="row prize-row my-4">
-          <prize v-for="(prizeObj) in prizes" :key="prizeObj._id" :prizeData="prizeObj" />
+          <prize v-for="(prizeObj) in activePrizes" :key="prizeObj._id" :prizeData="prizeObj" />
         </div>
       </div>
     </div>
@@ -67,13 +67,15 @@ export default {
   mounted() {
     this.$store.dispatch("getStudentsByProfileId");
     this.$store.dispatch("getAllPrizes");
+    this.getActivePrizes(this.$store.state.prizes);
   },
   data() {
     return {
       studentForm: false,
       newStudent: {
         name: ""
-      }
+      },
+      activePrizes: []
     };
   },
   computed: {
@@ -97,6 +99,14 @@ export default {
   methods: {
     setActiveStudent(student) {
       this.$store.dispatch("setActiveStudent", student);
+    },
+    getActivePrizes(prizes) {
+      for (let i = 0; i < prizes.length; i++) {
+        let prize = prizes[i];
+        if (prize.active) {
+          this.activePrizes.push(prize);
+        }
+      }
     }
   }
 };
@@ -105,12 +115,6 @@ export default {
 <style scoped>
 img {
   max-width: 100px;
-}
-.bg-pic {
-  background-image: url("../assets/background2.jpg");
-  background-position-y: top;
-  background-size: cover;
-  height: 15rem;
 }
 .bg-ltgray {
   background-color: rgba(71, 71, 71, 0.795);
@@ -146,5 +150,9 @@ img {
 }
 .card-header {
   cursor: pointer;
+}
+.image {
+  height: 40px;
+  width: auto;
 }
 </style>

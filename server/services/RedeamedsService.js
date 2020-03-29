@@ -1,7 +1,7 @@
 import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
-let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
+let approved = ["aliciagilfoy@gmail.com", "test@test.com", "amwalsh22@gmail.com", "mimiacya@gmail.com", "brettbittinger@championsmartialarts.win", "arianeheath@hotmail.com"]
 class RedeamedsService {
   async getById(id) {
     let prize = await dbContext.Redeameds.findOne({ _id: id })
@@ -11,13 +11,6 @@ class RedeamedsService {
     return prize
   }
 
-  async getRedeamedByStudentId(id, email) {
-    let prizes = await dbContext.Redeameds.find({ studentId: id, profileEmail: email })
-    if (!prizes) {
-      throw new BadRequest("Invalid ID or you do not have access to this prize")
-    }
-    return prizes
-  }
   async getRedeamedByProfileEmail(email) {
     let prizes = await dbContext.Redeameds.find({ profileEmail: email })
     if (!prizes) {

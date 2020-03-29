@@ -20,8 +20,33 @@
         {{studentData.challengeName.length.toString()}}
       </h6>
       <div class="buttonRow row">
-        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
-        <button class="btn btn-sm btn-success m-1" v-if="$route.name=='Admin'">Add points</button>
+        <button
+          @click="deleteStudent(studentData._id)"
+          class="btn btn-sm btn-danger m-1"
+          v-if="$route.name=='Admin'"
+        >delete</button>
+        <button
+          v-if="$route.name=='Admin'"
+          type="button"
+          data-toggle="collapse"
+          :data-target="'#pointsChange' +studentData._id"
+          class="btn btn-sm btn-success m-1"
+        >Add/Remove points</button>
+      </div>
+      <div
+        class="card-text bg-success p-2 text-center collapse mt-1"
+        :id="'pointsChange' +studentData._id"
+      >
+        <form action id="pointsForm">
+          <label for="points">Points to add:</label>
+          <input v-model="selected" type="number" name="points" id="points" />
+          <small id="Help" class="form-text">To remove points set negative number.</small>
+          <button
+            @click.prevent="addPointsAdmin(studentData._id)"
+            class="btn btn-sm btn-secondary m-1"
+            v-if="$route.name=='Admin'"
+          >Save</button>
+        </form>
       </div>
     </div>
   </div>
@@ -32,17 +57,36 @@ export default {
   name: "Student",
   props: ["studentData"],
   components: {},
-  methods: {}
+  data() {
+    return {
+      selected: 0
+    };
+  },
+  methods: {
+    deleteStudent(id) {
+      this.$store.dispatch("deleteStudentById", id);
+    },
+    addPointsAdmin(id) {
+      let update = {
+        id: id,
+        points: this.selected
+      };
+      this.$store.dispatch("addPointsAdmin", update);
+      $("#pointsChange" + id).collapse("hide");
+      this.selected = 0;
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
 .icon {
   height: 30px;
   width: 30px;
 }
 .student-card {
   width: 100%;
+  height: fit-content;
 }
 .image {
   height: 40px;

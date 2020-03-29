@@ -42,7 +42,7 @@ export const challengeStore = {
       }
     },
 
-    async deleteById({ commit, dispatch }, id) {
+    async deleteChallengeById({ commit, dispatch }, id) {
       try {
         let res = await api.delete("challenges/" + id)
         dispatch("getAllChallenges")

@@ -1,9 +1,8 @@
 <template>
   <div class="card m-2">
     <div class="card-body bg-dark text-success text-center">
-      <h4 v-if="prize" class="card-title">Student: {{student.name}}</h4>
-      <h5 v-if="prize" class="card-title">{{prize.name}}</h5>
-      <p v-if="prize" class="card-text">{{prize.description}}</p>
+      <h4 class="card-title">Student: {{redeamedData.studentName}}</h4>
+      <h5 class="card-title">{{redeamedData.prizeName}}</h5>
       <button
         v-if="!redeamedData.complete"
         @click="completeRedeamed(redeamedData._id)"
@@ -21,21 +20,6 @@ export default {
   methods: {
     completeRedeamed(id) {
       this.$store.dispatch("completeRedeamed", id);
-    }
-  },
-  mounted() {
-    this.$store.dispatch("getAllPrizes");
-  },
-  computed: {
-    student() {
-      return this.$store.state.students.find(
-        s => s._id == this.redeamedData.studentId
-      );
-    },
-    prize() {
-      return this.$store.state.prizes.find(
-        p => p._id == this.redeamedData.prizeId
-      );
     }
   }
 };

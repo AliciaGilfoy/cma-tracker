@@ -1,8 +1,9 @@
 import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
-let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
+let approved = ["aliciagilfoy@gmail.com", "test@test.com", "amwalsh22@gmail.com", "mimiacya@gmail.com", "brettbittinger@championsmartialarts.win", "arianeheath@hotmail.com"]
 class StudentsService {
+
 
   async getStudentsByProfileEmail(email) {
     let students = await dbContext.Students.find({ profileEmail: email }).populate("challengeId", "name")
@@ -68,6 +69,24 @@ class StudentsService {
         await student.save();
         return student;
       }
+    }
+  }
+
+  async addAdminPoints(email, id, body) {
+    if (approved.find(e => e == email)) {
+      let student = await dbContext.Students.findOne({ _id: id });
+      if (!student) {
+        throw new BadRequest("Invalid ID or you do not have access to this student");
+      } else {
+        let pointValue = body.points * 1
+        // @ts-ignore
+        student.points += pointValue
+        // @ts-ignore
+        await student.save();
+        return student;
+      }
+    } else {
+      return "You can not delete this."
     }
   }
 

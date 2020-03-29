@@ -8,24 +8,28 @@
     </div>
     <div class="row button-row bg-black p-3">
       <button
-        class="btn btn-outline-success col-md-2 col-sm-6 my-2"
-        @click="studentsShow=true,challengesShow=false,tasksShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false"
+        class="btn btn-outline-success my-2"
+        @click="studentsShow=true,challengesShow=false,tasksShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
       >Students</button>
       <button
-        class="btn btn-outline-primary col-md-2 col-sm-6 my-2"
-        @click="challengesShow=true,studentsShow=false,tasksShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false"
+        class="btn btn-outline-success my-2"
+        @click="profileShow=true,challengesShow=false,tasksShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false,studentsShow=false"
+      >Profiles</button>
+      <button
+        class="btn btn-outline-primary my-2"
+        @click="challengesShow=true,studentsShow=false,tasksShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
       >Challenges</button>
       <button
-        class="btn btn-outline-warning col-md-2 col-sm-6 my-2"
-        @click="tasksShow=true,studentsShow=false,challengesShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false"
+        class="btn btn-outline-warning my-2"
+        @click="tasksShow=true,studentsShow=false,challengesShow=false,prizesShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
       >Tasks</button>
       <button
-        class="btn btn-outline-info col-md-2 col-sm-6 my-2"
-        @click="prizesShow=true,studentsShow=false,challengesShow=false,tasksShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false"
+        class="btn btn-outline-info my-2"
+        @click="prizesShow=true,studentsShow=false,challengesShow=false,tasksShow=false,redeamedsShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
       >Prizes</button>
       <button
-        class="btn btn-outline-danger col-md-2 col-sm-6 my-2"
-        @click="redeamedsShow=true,studentsShow=false,challengesShow=false,tasksShow=false,prizesShow=false,taskForm=false,challengeForm=false,prizeForm=false"
+        class="btn btn-outline-danger my-2"
+        @click="redeamedsShow=true,studentsShow=false,challengesShow=false,tasksShow=false,prizesShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
       >Redeamed Prizes</button>
     </div>
     <div class="row pt-4 bg-dark" v-if="challengesShow">
@@ -58,6 +62,9 @@
         :key="studentObj._id"
         :studentData="studentObj"
       />
+    </div>
+    <div class="row main-row pt-4 bg-dark" v-if="profileShow">
+      <profile v-for="(profileObj) in profiles" :key="profileObj._id" :profileData="profileObj" />
     </div>
     <div class="row pt-4 bg-success" v-if="tasksShow">
       <div class="col-12 text-center pb-4">
@@ -92,7 +99,7 @@
         <button v-if="prizeForm" @click="prizeForm=!prizeForm" class="btn btn-warning m-1">Cancel</button>
       </div>
       <prize-form v-if="prizeForm" />
-      <div class="main-row">
+      <div class="main-row col-12">
         <prize v-for="(prizeObj) in prizes" :key="prizeObj._id" :prizeData="prizeObj" />
       </div>
     </div>
@@ -108,6 +115,7 @@ import Task from "../components/task";
 import TaskForm from "../components/taskForm";
 import ChallengeForm from "../components/challengeForm";
 import PrizeForm from "../components/prizeForm";
+import Profile from "../components/profile";
 
 export default {
   name: "Admin",
@@ -118,6 +126,7 @@ export default {
     this.$store.dispatch("getAllTasks");
     this.$store.dispatch("getAllChallenges");
     this.$store.dispatch("getAllProfiles");
+    this.$store.dispatch("setActiveStudent", {});
   },
   computed: {
     profile() {
@@ -137,6 +146,9 @@ export default {
     },
     tasks() {
       return this.$store.state.tasks;
+    },
+    profiles() {
+      return this.$store.state.profiles;
     }
   },
   data() {
@@ -148,7 +160,8 @@ export default {
       prizesShow: false,
       challengeForm: false,
       taskForm: false,
-      prizeForm: false
+      prizeForm: false,
+      profileShow: false
     };
   },
   components: {
@@ -159,7 +172,8 @@ export default {
     Task,
     TaskForm,
     ChallengeForm,
-    PrizeForm
+    PrizeForm,
+    Profile
   }
 };
 </script>
@@ -186,9 +200,5 @@ img {
 }
 ul {
   list-style-type: none;
-}
-.student-card {
-  width: 100%;
-  height: 250px;
 }
 </style>

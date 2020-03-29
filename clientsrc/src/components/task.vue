@@ -13,7 +13,11 @@
           <i class="fas fa-external-link-alt"></i>
         </a>
         <span class="text-warning">({{taskData.point}} points)</span>
-        <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
+        <button
+          @click="deleteTask(taskData._id)"
+          class="btn btn-sm btn-danger m-1"
+          v-if="$route.name=='Admin'"
+        >delete</button>
       </p>
       <footer v-if="taskData.description" class="blockquote-footer">{{taskData.description}}</footer>
     </blockquote>
@@ -24,11 +28,15 @@
 export default {
   name: "Task",
   props: ["taskData"],
-  methods: {}
+  methods: {
+    deleteTask(task) {
+      this.$store.dispatch("deleteTaskById", task);
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
 .icon {
   height: 30px;
   width: 30px;

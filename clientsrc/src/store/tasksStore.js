@@ -42,7 +42,7 @@ export const taskStore = {
       }
     },
 
-    async deleteById({ commit, dispatch }, id) {
+    async deleteTaskById({ commit, dispatch }, id) {
       try {
         let res = await api.delete("tasks/" + id)
         dispatch("getAllTasks")

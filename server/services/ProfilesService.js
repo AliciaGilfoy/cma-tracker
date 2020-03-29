@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext";
-let approved = ["aliciagilfoy@gmail.com", "test@test.com"]
+let approved = ["aliciagilfoy@gmail.com", "test@test.com", "amwalsh22@gmail.com", "mimiacya@gmail.com", "brettbittinger@championsmartialarts.win", "arianeheath@hotmail.com"]
 // Private Methods
 
 /**
@@ -91,6 +91,20 @@ class ProfileService {
       { runValidators: true, setDefaultsOnInsert: true, new: true }
     );
     return profile;
+  }
+
+  async updateProfilePermissions(user, body) {
+    if (approved.find(e => e == user)) {
+      let update = sanitizeBody(body.body);
+      let profile = await dbContext.Profile.findOneAndUpdate(
+        { _id: body.profileId },
+        { $set: update },
+        { new: true }
+      );
+      return profile;
+    } else {
+      return "No"
+    }
   }
 }
 export const profilesService = new ProfileService();

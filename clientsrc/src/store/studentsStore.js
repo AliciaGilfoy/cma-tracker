@@ -49,7 +49,20 @@ export const studentStore = {
           let message = "You already added points for that date."
           commit("setError", message)
         }
-        console.log(res)
+        let studentId = update.id
+        let points = res.data.points
+        commit("updatePoints", { studentId, points })
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addPointsAdmin({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("students/" + update.id + "/adminPoints", { points: update.points })
+        let studentId = update.id
+        let points = res.data.points
+        commit("updatePoints", { studentId, points })
       } catch (error) {
         console.error(error);
       }
@@ -78,7 +91,7 @@ export const studentStore = {
       }
     },
 
-    async deleteById({ commit, dispatch }, id) {
+    async deleteStudentById({ commit, dispatch }, id) {
       try {
         let res = await api.delete("students/" + id);
         commit("deleteStudent", id)
@@ -87,7 +100,7 @@ export const studentStore = {
       }
     },
 
-    async deleteAll({ commit, dispatch }, id) {
+    async deleteAllStudents({ commit, dispatch }, id) {
       try {
         let res = await api.delete("students/");
         dispatch(this.getAllStudents)

@@ -15,7 +15,8 @@ export class ProfilesController extends BaseController {
       .get("/all", this.getAllProfiles)
       .get("/:id/students", this.getStudentsByProfileEmail)
       .get("/:id/redeamed", this.getRedeamedByProfileEmail)
-      .put("/:id", this.edit);
+      .put("/:id", this.edit)
+      .put("/:id/editPermissions", this.editPermissions)
   }
   async getUserProfile(req, res, next) {
     try {
@@ -56,6 +57,16 @@ export class ProfilesController extends BaseController {
     try {
       req.body.creatorId = req.user.sub;
       let data = await profilesService.updateProfile(req.userInfo, req.body)
+      res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+  async editPermissions(req, res, next) {
+    try {
+      let data = await profilesService.updateProfilePermissions(req.userInfo.email, req.body)
       res.send(data);
     } catch (error) {
       next(error);
