@@ -22,7 +22,6 @@
       <div class="buttonRow row">
         <button class="btn btn-sm btn-danger m-1" v-if="$route.name=='Admin'">delete</button>
         <button class="btn btn-sm btn-success m-1" v-if="$route.name=='Admin'">Add points</button>
-        <button class="btn btn-sm btn-primary m-1" v-if="$route.name=='Admin'">Edit</button>
       </div>
     </div>
   </div>
