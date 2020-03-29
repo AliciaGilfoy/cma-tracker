@@ -137,6 +137,15 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
+    },
+
+    async updateProfile({ commit, dispatch }, update) {
+      try {
+        let res = await api.put("profile/" + update.profileId, update)
+        commit("setProfile", res.data)
+      } catch (error) {
+        console.error(error);
+      }
     }
 
   },

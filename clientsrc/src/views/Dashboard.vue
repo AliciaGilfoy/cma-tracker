@@ -1,9 +1,23 @@
 <template>
   <div class="container-fluid bg-success page">
     <div class="about text-center row pic-row bg-pic">
-      <h1 class="text-success col-12 p-0 bg-ltgray m-0">
+      <h1 v-if="profile.name" class="text-success col-12 px-0 py-1 bg-ltgray m-0">
         <strong>Welcome {{ profile.name }}</strong>
       </h1>
+      <button
+        v-if="profile.name"
+        type="button"
+        data-toggle="collapse"
+        data-target="#nameFormDiv"
+        class="col-12 btn btn-block btn-secondary"
+      >Update your name.</button>
+      <div class="col-12 bg-secondary text-light p-2 text-center collapse p-1" id="nameFormDiv">
+        <form action id="nameForm">
+          <label class="px-2" for="name">Name:</label>
+          <input class="px-2" v-model="selected" type="text" name="name" id="name" />
+          <button @click.prevent="updateName()" class="btn btn-sm btn-success mb-1 mx-1">Save</button>
+        </form>
+      </div>
     </div>
     <div class="row main-row slanted">
       <div class="col-sm-12 col-md-5 mx-2 student-section">
@@ -71,7 +85,8 @@ export default {
       studentForm: false,
       newStudent: {
         name: ""
-      }
+      },
+      selected: ""
     };
   },
   computed: {
@@ -93,6 +108,15 @@ export default {
     addStudent() {
       this.$store.dispatch("createStudent", this.newStudent);
       this.studentForm = false;
+    },
+    updateName() {
+      let update = {
+        profileId: this.profile._id,
+        name: this.selected
+      };
+      this.$store.dispatch("updateProfile", update);
+      $("#nameFormDiv").collapse("hide");
+      this.selected = "";
     }
   }
 };

@@ -1,9 +1,6 @@
 <template>
   <div class="card col-10 m-2">
-    <div class="card-header">
-      {{profileData.name}}
-      <button class="btn btn-sm btn-outline-secondary mx-1">Edit Name</button>
-    </div>
+    <div class="card-header">{{profileData.name}}</div>
     <div class="card-body">
       <h5 class="card-title">{{profileData.email}}</h5>
       <p class="card-text">
@@ -66,20 +63,16 @@ export default {
     changeAdmin(id, boolean, instructor) {
       let update = {
         profileId: id,
-        body: {
-          admin: boolean,
-          instructor: instructor
-        }
+        admin: boolean,
+        instructor: instructor
       };
       this.$store.dispatch("updateProfilePermissions", update);
     },
     changeInstructor(id, boolean, admin) {
       let update = {
         profileId: id,
-        body: {
-          instructor: boolean,
-          admin: admin
-        }
+        instructor: boolean,
+        admin: admin
       };
       this.$store.dispatch("updateProfilePermissions", update);
     }
