@@ -1,11 +1,10 @@
 import Axios from "axios";
 
 let baseUrl = location.host.includes("localhost")
-  ? "http://localhost:3000/"
+  ? "https://cma-tracker.herokuapp.com/"
   : "/";
 
 export const api = Axios.create({
   baseURL: baseUrl + "api",
-  timeout: 30000,
   withCredentials: true
 });
