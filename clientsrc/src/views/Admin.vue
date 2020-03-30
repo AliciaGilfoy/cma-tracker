@@ -48,7 +48,7 @@
       <challenge-form v-if="challengeForm" />
       <div class="main-row col-12">
         <challenge
-          class="col-5"
+          class="col-md-5 col-sm-12"
           v-for="(challengeObj) in challenges"
           :key="challengeObj._id"
           :challengeData="challengeObj"
@@ -57,7 +57,7 @@
     </div>
     <div class="row main-row pt-4 bg-dark" v-if="studentsShow">
       <student
-        class="col-3"
+        class="col-md-3 col-sm-12"
         v-for="(studentObj) in students"
         :key="studentObj._id"
         :studentData="studentObj"
