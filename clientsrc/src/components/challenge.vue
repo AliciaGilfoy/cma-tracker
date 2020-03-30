@@ -48,7 +48,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitChallenge(challengeData._id)" id="pointsForm">
+            <form @submit.prevent="submitChallenge(challengeData)" id="pointsForm">
               <div class="form-group">
                 <label class="float-left text-secondary" for="student">Select student</label>
                 <select class="custom-select" id="studentSelect" v-model="selected">
@@ -87,7 +87,7 @@ export default {
       let challengeName = data.name;
       let update = {
         id: this.selected._id,
-        points: totalPoints,
+        points: totalPoints * 1,
         challengeId: challengeId,
         challengeName: challengeName
       };
