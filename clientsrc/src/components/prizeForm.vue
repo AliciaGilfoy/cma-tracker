@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 pb-4">
+  <div v-if="prizeForm" class="col-12 pb-4">
     <form @submit.prevent="createPrize" class="bg-light p-3">
       <div class="form-group">
         <label for="name">Prize Name</label>
@@ -78,6 +78,7 @@ export default {
         instructorId: this.selected
       };
       this.$store.dispatch("createPrize", prize);
+      this.prizeForm = false;
     },
     findInstructors(profiles) {
       for (let i = 0; i < profiles.length; i++) {
@@ -93,7 +94,8 @@ export default {
       newPrize: {},
       selected: "",
       instructors: [],
-      type: ""
+      type: "",
+      prizeForm: true
     };
   },
   computed: {

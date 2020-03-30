@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 pb-4">
+  <div v-if="challengeForm" class="col-12 pb-4">
     <form @submit.prevent="createChallenge" class="bg-light p-3">
       <div class="form-group">
         <label for="name">Challenge Name</label>
@@ -50,11 +50,13 @@ export default {
   methods: {
     createChallenge() {
       this.$store.dispatch("createChallenge", this.newChallenge);
+      this.challengeForm = false;
     }
   },
   data() {
     return {
-      newChallenge: {}
+      newChallenge: {},
+      challengeForm: true
     };
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 pb-4">
+  <div v-if="taskForm" class="col-12 pb-4">
     <form @submit.prevent="createTask" class="bg-light p-3">
       <div class="form-group">
         <label for="name">Task Name</label>
@@ -62,11 +62,13 @@ export default {
     createTask() {
       debugger;
       this.$store.dispatch("createTask", this.newTask);
+      this.taskForm = false;
     }
   },
   data() {
     return {
-      newTask: {}
+      newTask: {},
+      taskForm: true
     };
   }
 };
