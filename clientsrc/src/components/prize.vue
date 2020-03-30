@@ -1,14 +1,14 @@
 <template>
   <div class="card m-1 col-md-3 col-sm-12 bg-light border border-success card-content">
     <div class="card-body text-success text-center">
-      <h3 v-if="prizeData" class="card-title">
+      <h3 class="card-title">
         <strong>{{prizeData.name}}</strong>
       </h3>
-      <p v-if="prizeData" class="card-text">{{prizeData.description}}</p>
-      <p v-if="prizeData" class="card-text text-warning">
+      <p class="card-text">{{prizeData.description}}</p>
+      <p class="card-text text-warning">
         Cost: {{prizeData.price}} points
         <span
-          v-if="!prizeData.active"
+          v-if="prizeData.active==false"
           class="text-danger mx-2 p-1 border border-danger"
         >
           <strong>Inactive</strong>

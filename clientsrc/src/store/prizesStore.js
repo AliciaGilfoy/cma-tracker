@@ -2,10 +2,11 @@ import { api } from "../services/AxiosService";
 
 export const prizeStore = {
   actions: {
-    async getAllPrizes({ commit }) {
+    async getAllPrizes({ commit, dispatch }) {
       try {
         let res = await api.get("prizes");
         commit("setPrizes", res.data);
+        commit("setActivePrizes", res.data)
       } catch (error) {
         console.error(error);
       }

@@ -21,6 +21,7 @@ export default new Vuex.Store({
     activeChallenge: {},
     prizes: [],
     activePrize: {},
+    activePrizes: [],
     redeameds: [],
     activeRedeameds: {},
     tasks: [],
@@ -57,6 +58,9 @@ export default new Vuex.Store({
     },
     setActivePrize(state, prize) {
       state.activePrize = prize;
+    },
+    setActivePrizes(state, prizes) {
+      state.activePrizes = prizes.filter(p => p.active != false)
     },
     addPrize(state, prize) {
       state.prizes.push(prize)

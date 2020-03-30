@@ -51,7 +51,7 @@
           </h2>
         </div>
         <div class="row prize-row my-4">
-          <prize v-for="(prizeObj) in activePrizes" :key="prizeObj._id" :prizeData="prizeObj" />
+          <prize v-for="(prizeObj) in prizes" :key="prizeObj._id" :prizeData="prizeObj" />
         </div>
       </div>
     </div>
@@ -67,7 +67,6 @@ export default {
   mounted() {
     this.$store.dispatch("getStudentsByProfileId");
     this.$store.dispatch("getAllPrizes");
-    this.getActivePrizes(this.$store.state.prizes);
   },
   data() {
     return {
@@ -86,7 +85,7 @@ export default {
       return this.$store.state.students;
     },
     prizes() {
-      return this.$store.state.prizes;
+      return this.$store.state.activePrizes;
     },
     activeStudent() {
       return this.$store.state.activeStudent;
