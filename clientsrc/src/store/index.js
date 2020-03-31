@@ -35,7 +35,7 @@ export default new Vuex.Store({
       state.profile = profile;
     },
     setProfiles(state, profiles) {
-      state.profiles = profiles
+      state.profiles = profiles.sort((a, b) => (a.name > b.name) ? 1 : -1);
     },
     setActiveStudent(state, student) {
       state.activeStudent = student;
