@@ -78,7 +78,9 @@ export default new Vuex.Store({
       state.redeameds.filter(r => r._id != id)
     },
     setTasks(state, tasks) {
-      state.tasks = tasks
+      state.tasks = tasks.sort((a, b) =>
+        a.point < b.point ? 1 : -1
+      );
     },
     setActiveTask(state, task) {
       state.activeTask = task

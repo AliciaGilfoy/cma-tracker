@@ -1,6 +1,9 @@
 <template>
   <div class="card m-1 col-md-3 col-sm-12 bg-light border border-success card-content">
-    <div class="card-body text-success text-center">
+    <div v-if="editing&&$route.name=='Admin'" class="card-body text-success text-center">
+      <edit-prize v-for="(prizeObj) in prizeToEdit" :key="prizeObj._id" :prizeData="prizeObj" />
+    </div>
+    <div v-if="!editing" class="card-body text-success text-center">
       <h3 class="card-title">
         <strong>{{prizeData.name}}</strong>
       </h3>
@@ -30,6 +33,11 @@
           class="btn btn-sm btn-success m-1"
           v-if="$route.name=='Admin'&&!prizeData.active"
         >Make Available</button>
+        <button
+          @click="editPrize(prizeData)"
+          class="btn btn-sm btn-secondary m-1"
+          v-if="$route.name=='Admin'"
+        >Edit</button>
       </div>
     </div>
   </div>
@@ -37,6 +45,7 @@
 
 <script>
 import Swal from "sweetalert2";
+import EditPrize from "../components/editPrize";
 
 export default {
   name: "Prize",
@@ -49,7 +58,9 @@ export default {
         .replace(/-/g, "/")
         .split("/")
         .reverse()
-        .join("/")}`
+        .join("/")}`,
+      editing: false,
+      prizeToEdit: []
     };
   },
   methods: {
@@ -105,12 +116,19 @@ export default {
         }
       };
       this.$store.dispatch("editPrize", update);
+    },
+    editPrize(prize) {
+      this.editing = true;
+      this.prizeToEdit.push(prize);
     }
   },
   computed: {
     activeStudent() {
       return this.$store.state.activeStudent;
     }
+  },
+  components: {
+    EditPrize
   }
 };
 </script>
