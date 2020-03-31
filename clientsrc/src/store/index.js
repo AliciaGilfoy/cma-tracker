@@ -41,7 +41,7 @@ export default new Vuex.Store({
       state.activeStudent = student;
     },
     setStudents(state, students) {
-      state.students = students
+      state.students = students.sort((a, b) => (a.name > b.name) ? 1 : -1);
     },
     deleteStudent(state, id) {
       state.students = state.students.filter(s => s._id != id)

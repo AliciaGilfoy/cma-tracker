@@ -18,7 +18,7 @@
         v-if="prizeData.price<activeStudent.points"
         @click="buyPrize(prizeData)"
         class="btn btn-sm btn-success"
-      >Redeam Points for this Prize</button>
+      >Redeem Points for this Prize</button>
       <div class="buttonRow row">
         <button
           @click="deletePrize(prizeData._id)"
@@ -74,7 +74,7 @@ export default {
               instructorId: prize.instructorId,
               date: this.todaysDate
             };
-            Swal.fire("Redeamed!", "Points have been redeamed.", "success");
+            Swal.fire("Redeemed!", "Points have been redeemed.", "success");
             this.$store.dispatch("spendPoints", update);
             this.$store.dispatch("createRedeamed", update);
           } else {
@@ -87,7 +87,7 @@ export default {
               instructorId: "5e7ff8cd59b18b366c1fc058",
               date: this.todaysDate
             };
-            Swal.fire("Redeamed!", "Points have been redeamed.", "success");
+            Swal.fire("Redeemed!", "Points have been redeemed.", "success");
             this.$store.dispatch("spendPoints", update);
             this.$store.dispatch("createRedeamed", update);
           }

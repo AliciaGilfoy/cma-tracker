@@ -1,25 +1,55 @@
 <template>
-  <div class="student-card card border-success mb-3">
-    <div class="card-header h3 bg-light text-dark">
-      <h3>
-        <img class="image mr-4" src="../assets/student.png" />
-        <strong>{{studentData.name}}</strong>
-      </h3>
+  <div>
+    <div v-if="$route.name=='Admin'" class="student-detail bg-light border border-dark">
+      <h5
+        class="p-2 m-0"
+      >{{studentData.name}} - Total Points: {{studentData.points}} - Completed Days: {{studentData.date.length.toString()}} - Completed Challenges: {{studentData.challengeName.length.toString()}}</h5>
+      <div class="py-2">
+        <button @click="deleteStudent(studentData._id)" class="btn btn-sm btn-danger m-1">delete</button>
+        <button
+          type="button"
+          data-toggle="collapse"
+          :data-target="'#pointsChange' +studentData._id"
+          class="btn btn-sm btn-success m-1"
+        >Add/Remove points</button>
+      </div>
+      <div
+        class="card-text bg-success p-2 text-center collapse mt-1"
+        :id="'pointsChange' +studentData._id"
+      >
+        <form action id="pointsForm">
+          <label class="pr-2" for="points">Points to add:</label>
+          <input v-model="selected" type="number" name="points" id="points" />
+          <small id="Help" class="form-text">To remove points set negative number.</small>
+          <button
+            @click.prevent="addPointsAdmin(studentData._id)"
+            class="btn btn-sm btn-secondary m-1"
+            v-if="$route.name=='Admin'"
+          >Save</button>
+        </form>
+      </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">
-        <strong class="text-success">Total Points:</strong>
-        {{studentData.points}}
-      </h5>
-      <h5 class="card-text">
-        <strong class="text-success">Completed Days:</strong>
-        {{studentData.date.length.toString()}}
-      </h5>
-      <h6 class="card-text">
-        <strong class="text-success">Completed Challenges:</strong>
-        {{studentData.challengeName.length.toString()}}
-      </h6>
-      <div class="buttonRow row">
+    <div v-if="$route.name!='Admin'" class="student-card card mb-3">
+      <div class="card-header h3 bg-light text-dark">
+        <h3>
+          <img class="image mr-4" src="../assets/student.png" />
+          <strong>{{studentData.name}}</strong>
+        </h3>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          <strong class="text-success">Total Points:</strong>
+          {{studentData.points}}
+        </h5>
+        <h5 class="card-text">
+          <strong class="text-success">Completed Days:</strong>
+          {{studentData.date.length.toString()}}
+        </h5>
+        <h6 class="card-text">
+          <strong class="text-success">Completed Challenges:</strong>
+          {{studentData.challengeName.length.toString()}}
+        </h6>
+        <!-- <div class="buttonRow row">
         <button
           @click="deleteStudent(studentData._id)"
           class="btn btn-sm btn-danger m-1"
@@ -32,21 +62,7 @@
           :data-target="'#pointsChange' +studentData._id"
           class="btn btn-sm btn-success m-1"
         >Add/Remove points</button>
-      </div>
-      <div
-        class="card-text bg-success p-2 text-center collapse mt-1"
-        :id="'pointsChange' +studentData._id"
-      >
-        <form action id="pointsForm">
-          <label for="points">Points to add:</label>
-          <input v-model="selected" type="number" name="points" id="points" />
-          <small id="Help" class="form-text">To remove points set negative number.</small>
-          <button
-            @click.prevent="addPointsAdmin(studentData._id)"
-            class="btn btn-sm btn-secondary m-1"
-            v-if="$route.name=='Admin'"
-          >Save</button>
-        </form>
+        </div>-->
       </div>
     </div>
   </div>
@@ -110,5 +126,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+.student-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

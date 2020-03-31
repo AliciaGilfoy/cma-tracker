@@ -19,7 +19,7 @@
         </form>
       </div>
     </div>
-    <div class="row main-row slanted">
+    <div class="row main-row">
       <div class="col-sm-12 col-md-5 mx-2 student-section">
         <div class="text-center title-row row mt-2">
           <button @click="studentForm = !studentForm" class="btn btn-success text-dark">
@@ -44,6 +44,7 @@
             </div>
           </div>
           <student
+            class="col-12"
             v-for="(studentObj) in students"
             :key="studentObj._id"
             :studentData="studentObj"

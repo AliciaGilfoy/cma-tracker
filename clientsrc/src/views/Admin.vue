@@ -30,7 +30,7 @@
       <button
         class="btn btn-outline-danger my-2"
         @click="redeamedsShow=true,studentsShow=false,challengesShow=false,tasksShow=false,prizesShow=false,taskForm=false,challengeForm=false,prizeForm=false,profileShow=false"
-      >Redeamed Prizes</button>
+      >Redeemed Prizes</button>
     </div>
     <div class="row pt-4 bg-dark" v-if="challengesShow">
       <div class="col-12 text-center pb-4">
@@ -56,8 +56,21 @@
       </div>
     </div>
     <div class="row main-row pt-4 bg-dark" v-if="studentsShow">
+      <div class="col-12 text-center">
+        <button
+          v-if="sorted"
+          @click="sortByPoints"
+          class="btn btn-primary my-2 float-left"
+        >Sort by Points</button>
+        <button
+          v-if="!sorted"
+          @click="sortByName"
+          class="btn btn-primary my-2 float-left"
+        >Sort by Name</button>
+        <h3 class="text-white my-1 pr-5">Students:</h3>
+      </div>
       <student
-        class="col-md-3 col-sm-12"
+        class="col-12"
         v-for="(studentObj) in students"
         :key="studentObj._id"
         :studentData="studentObj"
@@ -154,15 +167,32 @@ export default {
   data() {
     return {
       redeamedsShow: false,
-      studentsShow: false,
+      studentsShow: true,
       challengesShow: false,
       tasksShow: false,
       prizesShow: false,
       challengeForm: false,
       taskForm: false,
       prizeForm: false,
-      profileShow: false
+      profileShow: false,
+      sorted: true
     };
+  },
+  methods: {
+    sortByName() {
+      let sortedStudents = this.students.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
+      this.students = sortedStudents;
+      this.sorted = true;
+    },
+    sortByPoints() {
+      let sortedStudents = this.students.sort((a, b) =>
+        a.points < b.points ? 1 : -1
+      );
+      this.students = sortedStudents;
+      this.sorted = false;
+    }
   },
   components: {
     Student,
@@ -200,5 +230,10 @@ img {
 }
 ul {
   list-style-type: none;
+}
+.title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
