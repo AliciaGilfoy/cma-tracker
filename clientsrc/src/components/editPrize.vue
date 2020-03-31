@@ -9,7 +9,6 @@
           name="name"
           id="name"
           v-model="newPrize.name"
-          :placeholder="prizeData.name"
           required
         />
         <small id="Help" class="form-text text-muted">Required</small>
@@ -22,7 +21,6 @@
           name="description"
           id="description"
           v-model="newPrize.description"
-          :placeholder="prizeData.description"
         />
       </div>
       <div class="form-group m-0 p-0">
@@ -33,7 +31,6 @@
           name="price"
           id="price"
           v-model="newPrize.price"
-          :placeholder="prizeData.price"
           required
         />
         <small id="Help" class="form-text text-muted">Required</small>
@@ -49,6 +46,7 @@
       <div class="form-group m-0 p-0" v-if="instructors">
         <label class="float-left" for="instructor">Select Instructor</label>
         <select class="custom-select" id="instructorSelect" v-model="selected">
+          <option :value="prizeData.instructorId" selected>{{prizeData.instructorName}}</option>
           <option
             v-for="instructor in instructors"
             :key="instructor._id"
@@ -67,6 +65,7 @@ export default {
   props: ["prizeData"],
   mounted() {
     this.findInstructors(this.$store.state.profiles);
+    this.setPrizeData();
   },
   methods: {
     editThisPrize(id) {
@@ -82,7 +81,6 @@ export default {
       };
       this.$store.dispatch("editPrize", update);
       this.editPrize = false;
-      this.$emit("clicked");
     },
     findInstructors(profiles) {
       for (let i = 0; i < profiles.length; i++) {
@@ -91,6 +89,9 @@ export default {
           this.instructors.push(profile);
         }
       }
+    },
+    setPrizeData() {
+      this.newPrize = this.prizeData;
     }
   },
   data() {
